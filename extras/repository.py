@@ -2,91 +2,125 @@ import mysql.connector
 import pandas as pd
 
 class Database:
+    """
+    Represents a database handler for storing temperature and humidity data.
+
+    This class provides methods to interact with a MySQL database to store and retrieve temperature 
+    and humidity data.
+    """
     def __init__(self):
-        
-        self.__databaseName = "temps"
-        self.__tableName="tempdata"
-        
-        self.checkDatabaseExists()
-        
+        """
+        Initializes a Database instance.
+
+        This constructor sets up the database connection and ensures the database and table exist.
+        """
+        self.__database_name = "temps"
+        self.__table_name = "tempdata"
+
+        self.check_database_exists()
+
         self.mydb = mysql.connector.connect(
             host="localhost",
             user="pi",
             password="abc123",
-            database=self.__databaseName
+            database=self.__database_name
         )
-        
-        self.checkTableExists()
-        
-  
-    def checkDatabaseExists(self):
-        
+
+        self.check_table_exists()
+
+    def check_database_exists(self):
+        """
+        Checks if the specified database exists and creates it if it doesn't.
+
+        This method checks for the existence of the database with the specified name and creates it if not found.
+        """
         temp_connection = mysql.connector.connect(
             host="localhost",
             user="pi",
             password="abc123"
         )
 
-        # Create a cursor to execute queries
         cursor = temp_connection.cursor()
-
-        # Check if the database exists
-     
-        cursor.execute(f"SHOW DATABASES LIKE '{self.__databaseName}'")
+        cursor.execute(f"SHOW DATABASES LIKE '{self.__database_name}'")
         exists = cursor.fetchone()
-
-        # Close the temporary connection
         temp_connection.close()
 
-        # If the database does not exist, notify the user or create it
         if not exists:
-            print(f"Database '{self.__databaseName}' does not exist.")
-            cursor.execute("CREATE DATABASE {database_name}")    
-        
+            print(f"Database '{self.__database_name}' does not exist.")
+            cursor.execute(f"CREATE DATABASE {self.__database_name}")
         cursor.close()
-        
-    
-    def getDataFrame(self):
-        # Create a cursor to execute queries
+
+    def get_data_frame(self):
+        """
+        Retrieves data from the table and returns it as a Pandas DataFrame.
+
+        Returns:
+        pandas.DataFrame: A DataFrame containing the selected data from the table.
+        """
         cursor = self.mydb.cursor()
-        # SQL query to select data from the table
-        sql = f"SELECT * FROM {self.__tableName}"
-        # Execute the query to select data
+        sql = f"SELECT * FROM {self.__table_name}"
         cursor.execute(sql)
-        # Fetch all the selected data
         selected_data = cursor.fetchall()
 
-        # Create a Pandas DataFrame from the selected data
         df = pd.DataFrame(selected_data, columns=[col[0] for col in cursor.description])
-        return df 
-    
-    def checkTableExists(self):
-        
+        return df
+
+    def check_table_exists(self):
+        """
+        Checks if the specified table exists and creates it if it doesn't.
+
+        This method checks for the existence of the table with the specified name and creates it 
+        if not found.
+        """
         cursor = self.mydb.cursor()
-        
-        # Check if the table exists
-        cursor.execute(f"SHOW TABLES LIKE '{self.__tableName}'")
-        
-        # Fetch one row from the result (if any)
+        cursor.execute(f"SHOW TABLES LIKE '{self.__table_name}'")
         result = cursor.fetchone()
-       
-        # If table not in database create table
+
         if not result:
-            cursor.execute(f"CREATE TABLE {self.__tableName} (recorded_time DATETIME, temperature NUMERIC, temperature_category VARCHAR(255), humidity NUMERIC, humidity_category VARCHAR(255))")
-        
-        cursor.close() 
-    
-    def insert(self,data):
+            create_table_query = (
+                f"CREATE TABLE {self.__table_name} ("
+                "recorded_time DATETIME, "
+                "temperature NUMERIC, "
+                "temperature_category VARCHAR(255), "
+                "humidity NUMERIC, "
+                "humidity_category VARCHAR(255)"
+                ")"
+            )
+            cursor.execute(create_table_query)
+            cursor.close()
+    def insert(self, data):
+        """
+        Inserts data into the table.
+
+        Parameters:
+        data (dict): A dictionary containing data to be inserted into the table.
+        """
         cursor = self.mydb.cursor()
-        sql = f"INSERT INTO {self.__tableName} (recorded_time, temperature, temperature_category, humidity, humidity_category) VALUES (%s, %s, %s, %s, %s)" 
-        cursor.execute(sql, (data["recorded_time"], data["temperature"], data["temperature_category"],data['humidity'],data['humidity_category']))
+        insert_query = (
+            f"INSERT INTO {self.__table_name} "
+            "(recorded_time, temperature, temperature_category, humidity, humidity_category) "
+            "VALUES (%s, %s, %s, %s, %s)"
+        )
+        insert_data = (
+            data["recorded_time"],
+            data["temperature"],
+            data["temperature_category"],
+            data['humidity'],
+            data['humidity_category']
+        )
+        cursor.execute(insert_query, insert_data)
         self.mydb.commit()
         cursor.close()
-    
+
     def select(self):
+        """
+        Retrieves all data from the table and prints it.
+
+        This method retrieves all data from the table and prints each record.
+        """
         cursor = self.mydb.cursor()
-        cursor.execute(f"SELECT * FROM {self.__tableName}")
+        cursor.execute(f"SELECT * FROM {self.__table_name}")
         result = cursor.fetchall()
-        for x in result:
-            print(x)
+        for row in result:
+            print(row)
         

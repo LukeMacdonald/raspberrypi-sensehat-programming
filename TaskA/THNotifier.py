@@ -1,3 +1,7 @@
+"""
+Main script for monitoring and displaying environmental data on the Sense HAT LED matrix.
+"""
+
 # Import necessary libraries
 from datetime import datetime
 import os

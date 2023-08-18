@@ -32,7 +32,8 @@ class Database:
         """
         Checks if the specified database exists and creates it if it doesn't.
 
-        This method checks for the existence of the database with the specified name and creates it if not found.
+        This method checks for the existence of the database with the specified name and creates 
+        it if not found.
         """
         temp_connection = mysql.connector.connect(
             host="localhost",

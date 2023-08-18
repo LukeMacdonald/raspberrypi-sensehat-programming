@@ -51,7 +51,7 @@ class Database:
             cursor.execute(f"CREATE DATABASE {self.__database_name}")
         cursor.close()
 
-    def get_data_frame(self):
+    def get_dataframe(self):
         """
         Retrieves data from the table and returns it as a Pandas DataFrame.
 

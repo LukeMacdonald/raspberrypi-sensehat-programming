@@ -68,7 +68,7 @@ class DataVisulisation:
 
 if __name__ == "__main__":
     myDb = Database()
-    df = myDb.getDataFrame()
+    df = myDb.get_dataframe()
     
     x = df['recorded_time'].values
     y = df['temperature'].values

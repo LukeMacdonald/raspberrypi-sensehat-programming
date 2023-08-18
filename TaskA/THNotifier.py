@@ -14,7 +14,7 @@ def get_cpu_temp():
 def get_smooth(x):
     if not hasattr(get_smooth, "t"):
         get_smooth.t = [x,x,x]
-
+    
     get_smooth.t[2] = get_smooth.t[1]
     get_smooth.t[1] = get_smooth.t[0]
     get_smooth.t[0] = x
@@ -22,5 +22,19 @@ def get_smooth(x):
     return (get_smooth.t[0] + get_smooth.t[1] + get_smooth.t[2]) / 3
 
 
-
 sense = SenseHat()
+while True:
+   
+    t1 = sense.get_temperature_from_humidity()
+    t2 = sense.get_temperature_from_pressure()
+    t_cpu = get_cpu_temp()
+    
+    h = sense.get_humidity()
+    p = sense.get_pressure()
+
+    # Calculates the real temperature compesating CPU heating.
+    t = (t1 + t2) / 2
+    t_corr = t - ((t_cpu - t) / 1.5)
+    t_corr = get_smooth(t_corr)
+    print(t_corr)
+    time.sleep(10)

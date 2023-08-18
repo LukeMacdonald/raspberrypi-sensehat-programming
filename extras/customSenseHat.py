@@ -57,7 +57,7 @@ class CustomSenseHat:
         Parameters:
         emoji (Emoji): An instance of the Emoji class representing the desired emoji pattern.
         """
-        self.sense.set_pixels(emoji.getPattern())
+        self.sense.set_pixels(emoji.get_pattern())
 
     def detect_shaking(self, shake_threshold):
         """

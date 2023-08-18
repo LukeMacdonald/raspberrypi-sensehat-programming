@@ -1,4 +1,6 @@
-from time import sleep
+"""
+Main script for running the LED matrix emoji cycling program.
+"""
 import sys
 import os
 # Get the path of the parent directory
@@ -16,9 +18,10 @@ if __name__ == '__main__':
     emoji_list = EmojiList()
     try:
         while True:
-            current_emoji = emoji_list.cycleEmoji()
-            # Display these colours on the LED matrix
-            sense.displayEmoji(current_emoji)
-            sleep(2)
+            # Checks if raspberry pi has been shaken
+            if sense.detect_shaking(2):
+                current_emoji = emoji_list.cycle_emoji()
+                # Display these colours on the LED matrix
+                sense.display_emoji(current_emoji)
     except KeyboardInterrupt:
             sense.clear()

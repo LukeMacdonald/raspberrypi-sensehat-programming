@@ -1,17 +1,50 @@
+"""
+Module containing Emoji and EmojiList classes for managing LED matrix emojis.
+"""
 class Emoji:
-    def __init__(self,pattern):
+    """
+    Represents an emoji pattern to be displayed on an LED matrix.
+    """
+
+    def __init__(self, pattern):
+        """
+        Initializes an Emoji instance with the specified pixel pattern.
+
+        Parameters:
+        pattern (list): A list representing the pixel pattern of the emoji.
+        """
         self.__pattern = pattern
             
-    def setPattern(self, pattern):
+    def set_pattern(self, pattern):
+        """
+        Sets the pixel pattern of the emoji.
+
+        Parameters:
+        pattern (list): A list representing the new pixel pattern of the emoji.
+        """
         self.__pattern = pattern
-    
-    def getPattern(self):
+
+    def get_pattern(self):
+        """
+        Retrieves the pixel pattern of the emoji.
+
+        Returns:
+        list: A list representing the pixel pattern of the emoji.
+        """
         return self.__pattern
 
 class EmojiList:
+    """
+    Represents a collection of predefined emojis.
+    """
     def __init__(self):
+        """
+        Initializes an EmojiList instance and populates it with predefined emojis.
+        """
         self.__emojis = []
-        
+        self.__emoji_index = 0  # Initialize the index of the current emoji
+
+        # Define color constants
         y = (255, 255, 0)   # yellow
         e = (0, 0, 0)       # empty
         r = (255,0,0)       # red
@@ -23,8 +56,7 @@ class EmojiList:
         d = (0, 5, 145)     # dark blue
         m = (32, 110, 23)   # dark green
         q = (136, 201, 129) # light green
-        
-        # Pixel Setup for Each Emoji
+         # Initialize and append predefined emojis
         creeper_pixels = [
             g, g, g, g, g, g, g, g,
             m, m, m, m, m, m, m, m,
@@ -35,7 +67,6 @@ class EmojiList:
             g, g, e, e, e, e, g, g,
             m, m, e, m, m, e, m, m
         ]
-        
         smile_face = [
             e, e, y, y, y, y, e, e,
             e, y, e, e, e, e, y, e,
@@ -46,7 +77,6 @@ class EmojiList:
             e, y, e, e, e, e, y, e,
             e, e, y, y, y, y, e, e
         ]
-        
         pacman_face = [
             d, d, y, y, y, d, d, d,
             d, y, y, y, y, y, d, d,
@@ -57,7 +87,6 @@ class EmojiList:
             d, d, y, y, y, d, d, d,
             d, d, d, d, d, d, d, d
         ]
-        
         arrow = [
             e, e, e, w, w, e, e, e,
             e, e, y, y, y, y, e, e,
@@ -79,8 +108,6 @@ class EmojiList:
             e, e, e, o, o, e, e, e,
             e, e, e, e, e, e, e, e
         ]
-        
-        
         # Add all emoji pixel matrixes to list
         self.__emojis.append(Emoji(creeper_pixels))
         self.__emojis.append(Emoji(smile_face))
@@ -88,8 +115,14 @@ class EmojiList:
         self.__emojis.append(Emoji(arrow))
         self.__emojis.append(Emoji(heart))
     
-    def cycleEmoji(self):
-        current_emoji = self.__emojis.pop(0)
-        self.__emojis.append(current_emoji)
+    def cycle_emoji(self):
+        """
+        Cycles the emoji list and returns the next emoji.
+
+        Returns:
+        Emoji: The next emoji in the list after cycling.
+        """
+        current_emoji = self.__emojis[self.__emoji_index]
+        self.__emoji_index = (self.__emoji_index + 1) % len(self.__emojis)
         return current_emoji
         

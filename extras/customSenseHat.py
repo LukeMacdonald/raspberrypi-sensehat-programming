@@ -31,7 +31,8 @@ class CustomSenseHat:
 
     def get_calibrated_temperature(self):
         """
-        Retrieves the calibrated temperature reading by averaging humidity and pressure sensor values.
+        Retrieves the calibrated temperature reading by averaging humidity and pressure 
+        sensor values.
 
         Returns:
         float: Calibrated temperature value.

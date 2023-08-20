@@ -6,6 +6,8 @@ import sys
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+from datetime import datetime, timedelta
 import seaborn as sns
 import numpy as np
 
@@ -39,17 +41,35 @@ class DataVisulisation:
         image_name (str): Filename for saving the graph image.
         title (str): Title of the graph.
         """
-        formatted_x = [np.datetime_as_string(dt, unit='s') for dt in x]
+        
+        ### The Code marked between the 3 hashes was obtained through ChatGPT to allow x-axis ticks 
+        # to be placed evenly within range between first and last recorded datetimes.
+        
+        # Calculate min and max datetime values
+        min_datetime = np.min(x)
+        max_datetime = np.max(x)
+        
+        # Calculate number of desired ticks
+        num_ticks = 10
+        
+        # Generate a sequence of evenly spaced datetime ticks
+        tick_delta = (max_datetime - min_datetime) / (num_ticks - 1)
+        tick_positions = [min_datetime + i * tick_delta for i in range(num_ticks)]
+        
+        # Convert datetime64 objects to microseconds since epoch
+        tick_micros = (tick_positions - np.datetime64('1970-01-01T00:00:00')) / np.timedelta64(1, 'us')
+        
+        # Format datetime ticks
+        formatted_ticks = [str(datetime.utcfromtimestamp(int(micros / 1e6)).strftime('%Y-%m-%d:%H:%M:%S')) for micros in tick_micros]
+        ###
+        
+        plt.figure(figsize=(10, 8))
         plt.plot(x, y, marker='o')
         plt.title(title)
         plt.xlabel(x_label)
         plt.ylabel(y_label)
-        plt.xticks(formatted_x, [str(i) for i in formatted_x], rotation=90)
-
-        #set parameters for tick labels
-        plt.tick_params(axis='x', which='major', labelsize=8)
-        plt.locator_params(axis='x', nbins=len(formatted_x) // 2)
-
+        plt.xticks(tick_positions, [str(i) for i in formatted_ticks], rotation=90)
+        plt.subplots_adjust(bottom=0.4)
         plt.tight_layout()
         plt.savefig(image_name, dpi=300)
         plt.close()

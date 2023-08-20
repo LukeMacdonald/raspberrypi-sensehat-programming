@@ -58,8 +58,6 @@ if __name__ == "__main__":
             }
             # Insert data into the database and retrieve records
             myDb.insert(data)
-            myDb.select()
-
             # Display temperature on LED matrix and wait for 5 seconds
             sense.display_message(f"T {str(tempature_output)}", temp_color, 0.2)
             time.sleep(5)

@@ -24,3 +24,36 @@ There are several different data visualisation libraries for Python. After reduc
 two popular libraries for displaying the Sense HAT data. In the Python community, these libraries are well known and frequently used 
 for creating interesting and useful data visualisations. These tools are excellent choices for producing informative graphical representations 
 of the gathered data due to their adaptability, simplicity of use, and extensive functionality.
+
+Analytical comparison of the libraries used:
+Matplotlib
+Advantages:
+- Matplotlib offers a vast variety of plot types, from basic line and scatter plots to more complex visualizations like heatmaps, bar charts, and 3D plots.
+- The seamless integration of data analysis and visualisation is made possible by Matplotlib's great compatibility with other libraries and frameworks like NumPy and Pandas.
+- Matplotlib can save plots in different formats, such as PNG, PDF, SVG, and more.
+Disadvantages:
+- Compared to other libraries, the plots may not be as visually pleasing.
+- Code for creating complex plots can be verbose and repetitive.
+Simplicity/Complexity:
+Although Matplotlib offers a vast range of capability, its low-level structure makes it more difficult to use for straightforward tasks. 
+Flexibility/Configurations:
+With its great versatility, Matplotlib enables users to precisely manipulate every element of a plot. 
+- When designing detailed visualisations, this high level of flexibility might result in complex settings.
+Seaborn
+Advantages:
+- Uses the least amount of code possible to deliver visually appealing and educational visualisations.
+- Easy to learn for beginners.
+- Supports various types of plots.
+Disadvantages:
+- Limited customization options compared to Matplotlib.
+- It may not be suitable for creating complex and interactive visualizations.
+Simplicity/Complexity:
+Seaborn is designed to simplify the process of creating attractive statistical visualizations. 
+- Its high-level functions reduce complexity, making it well-suited for users who prioritize ease of use.
+Flexibility/Configurations:
+In favour of simplicity, Seaborn gives up some flexibility. 
+- Even though it has customization possibilities, intricate settings might need to revert to Matplotlib for tighter control.
+
+
+References:
+- Anon, (2023). Matplotlib vs Seaborn: Which Python Data Visualization Tool is Better - AITechTrend. [online] Available at: https://aitechtrend.com/matplotlib-vs-seaborn-which-python-data-visualization-tool-is-better/.

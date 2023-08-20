@@ -40,8 +40,7 @@ class DataVisulisation:
         title (str): Title of the graph.
         """
         formatted_x = [np.datetime_as_string(dt, unit='s') for dt in x]
-        fig = plt.figure()
-        plt.plot(formatted_x, y, marker='o')
+        plt.plot(x, y, marker='o')
         plt.title(title)
         plt.xlabel(x_label)
         plt.ylabel(y_label)

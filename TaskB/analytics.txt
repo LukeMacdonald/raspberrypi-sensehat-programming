@@ -1,0 +1,26 @@
+With the data that you have in the database, what kind of data visualisation graph should be used?
+There are two types of data visualisation graphs that should be used to represent the data collected from the sense hat
+from Task A.
+
+The line graph is the first graph option used. Due to its inherent characteristics, this style of graph is especially well-suited 
+for representing data gathered over time. A line graph excels in clearly and simply presenting temporal trends, patterns, and changes 
+for interpretation. It uses the visual coherence of a line joining data points to effectively illustrate how the data has changed over 
+the course of the recording period.
+
+The second graph used is a bar chart. Bar charts are effective at displaying data that has been divided into separate groups or categories. 
+They are a good option when working with discrete data segments because they offer a clear visual representation of the distribution of 
+values across various categories.
+
+What should be represented in the above graph? Why did you make that decision?
+The measured temperature and humidity variations over the time period will be represented visually by a line graph. This is because it 
+is simple to spot patterns, trends, and changes in temperature and humidity over time by using a line graph.
+
+The distribution of data within predefined categories will be shown on the bar chart. For example, the bar chart will clearly show the 
+total number of normal, hot, and cold temperature and normal, dry, and wet humidity categories. With this method, it is easy to see 
+how the obtained data is distributed among these several circumstances.
+
+Python supports numerous data visualisation libraries. Which two libraries did you narrow it down to?
+There are several different data visualisation libraries for Python. After reducing the options, Matplotlib and Seaborn emerged as 
+two popular libraries for displaying the Sense HAT data. In the Python community, these libraries are well known and frequently used 
+for creating interesting and useful data visualisations. These tools are excellent choices for producing informative graphical representations 
+of the gathered data due to their adaptability, simplicity of use, and extensive functionality.

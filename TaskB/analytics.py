@@ -10,6 +10,7 @@ import seaborn as sns
 import numpy as np
 
 
+
 # Get the path of the parent directory
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 # Add the parent directory to sys.path
@@ -38,10 +39,19 @@ class DataVisulisation:
         image_name (str): Filename for saving the graph image.
         title (str): Title of the graph.
         """
-        plt.plot(x, y, marker='o')
+        formatted_x = [np.datetime_as_string(dt, unit='s') for dt in x]
+        fig = plt.figure()
+        plt.plot(formatted_x, y, marker='o')
         plt.title(title)
         plt.xlabel(x_label)
         plt.ylabel(y_label)
+        plt.xticks(formatted_x, [str(i) for i in formatted_x], rotation=90)
+
+        #set parameters for tick labels
+        plt.tick_params(axis='x', which='major', labelsize=8)
+        plt.locator_params(axis='x', nbins=len(formatted_x) // 2)
+
+        plt.tight_layout()
         plt.savefig(image_name, dpi=300)
         plt.close()
 
